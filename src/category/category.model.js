@@ -1,4 +1,6 @@
-const categorySchema = Schema (
+import { model, Schema } from "mongoose"
+
+const categorySchema = Schema(
     {
         name: {
             type: String,
