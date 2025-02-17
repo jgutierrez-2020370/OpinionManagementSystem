@@ -1,4 +1,6 @@
 import mongoose from "mongoose"
+import { defaultCategory } from "../src/category/category.controller.js"
+import { defaultAdmin } from "../src/user/user.controller.js"
 
 export const connect = async()=>{
     try {
@@ -28,6 +30,10 @@ export const connect = async()=>{
                 serverSelectionTimeoutMS: 5000
             }
         )
+
+        defaultAdmin()
+        defaultCategory()
+        
     } catch (err) {
         console.logd('Database connection failed' , err)
     }
