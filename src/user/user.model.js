@@ -7,7 +7,7 @@ const userSchema = Schema(
             required: [true, 'Name is required'],
             maxLength: [50, `Can't be oversize 50 characters`]
         },
-        description: {
+        userDescription: {
             type: String,
             required: [true, 'Your description is required'],
             maxLength: [75, `Can't be oversize 75 characters`]
@@ -22,7 +22,7 @@ const userSchema = Schema(
         email: {
             type: String,
             required: [true , 'email is required'],
-            unique: true 
+            unique: true
         },
         password: {
             type: String,
@@ -30,6 +30,12 @@ const userSchema = Schema(
             minLength: [8, `Password must be 8 characteres`],
             maxLength: [100, `Can't be oversize 16 characteres`],
             match: [/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm]
+        },
+        role: {
+            type: String,
+            required: [true, 'role is required'],
+            uppercase: true,
+            enum: ['ADMIN', 'CLIENT']
         }
     },
     {
