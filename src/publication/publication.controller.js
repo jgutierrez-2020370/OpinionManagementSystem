@@ -1,44 +1,23 @@
 import Category from '../category/category.model.js'
 import Publication from './publication.model.js'
-import User from '../user/user.model.js'
 
 export const createPublication = async (req, res) => {
     try {
-        let { category, creator ,...data } = req.body
-
-        if (!creator) {
-            return res.status(404).send(
-                {
-                    success: false,
-                    message: "Creator is required"
-                }
-            )
-        }
-
-        const creatorData = await User.findOne({ _id: creator})
+        let { category, ...data } = req.body
         
-        if(!creatorData) {
-            return res.status(404).send(
-                {
-                    success: false,
-                    message: "Creator not found"
-                }
-            )
-        }
-
         if (!category) {
-            const categoryDefault = await Category.findOne({ name: "default"})
+            const categoryDefault = await Category.findOne({ name: "default" })
             category = categoryDefault.id
         }
 
-        const categoryData = await Category.findOne({ _id: category})
+        const categoryData = await Category.findOne({ _id: category })
 
         if (!categoryData) {
             return res.status(404).send(
                 {
-                success: false,
-                message: "Category not found"
-                }
+                    success: false,
+                    message: "Category not found"
+                }  
             )
         }
 
@@ -46,28 +25,34 @@ export const createPublication = async (req, res) => {
             {
                 ...data,
                 category: [categoryData.id],
-                creator: [creatorData.id]
+                creator: [req.user.uid]
             }
         )
+
         await publication.save()
+
+        const populatedPublication = await Publication.findById(publication.id)
+            .populate('category', 'name')
+            .populate('creator', 'userName')
+
         return res.status(200).send(
             {
                 success: true,
-                message: 'Publication added succesfully'
+                message: "Publication added successfully",
+                publication: populatedPublication
             }
         )
     } catch (err) {
         console.error(err)
-        return res.status(500).send(
-            {
+        return res.status(500).send({
                 success: false,
-                message: 'General error creating a publication',
+                message: "General error creating a publication",
                 err
             }
         )
-        
     }
 }
+
 
 
 export const updatePublication = async (req, res) => {
@@ -84,8 +69,9 @@ export const updatePublication = async (req, res) => {
                 }
             )
         }
-
-        if (publication.creator !== req.user.uid) {
+        console.log(publication.creator);
+        
+        if (publication.creator.toString() !== req.user.uid) {
             return res.status(403).send(
                 {
                     success: false,
@@ -129,11 +115,13 @@ export const updatePublication = async (req, res) => {
 
     } catch (err) {
         console.error(err)
-        return res.status(500).send({
-            success: false,
-            message: 'General error when updating publication',
-            err
-        })
+        return res.status(500).send(
+            {
+                success: false,
+                message: 'General error when updating publication',
+                err
+            }
+        )
     }
 }
 
