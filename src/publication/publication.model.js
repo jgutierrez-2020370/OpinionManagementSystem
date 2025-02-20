@@ -6,12 +6,12 @@ const publicationSchema = Schema(
             type: String,
             required: [true, 'Title is required'],
             unique: true,
-            maxLength: [40, `Can't be oversize 40 characters`]
+            maxLength: [30, `Can't be oversize 30 characters`]
         },
         description: {
             type: String,
             required: [true, 'Description is required'],
-            maxLength: [40, `Can't be oversize 40 characters`]
+            maxLength: [400, `Can't be oversize 400 characters`]
         },
         category: {
             type: Schema.Types.ObjectId,
