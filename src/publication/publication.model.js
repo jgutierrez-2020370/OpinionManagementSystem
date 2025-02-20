@@ -1,16 +1,16 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const publicationSchema = Schema(
     {
         title: {
             type: String,
-            required: [true, 'Name is required'],
+            required: [true, 'Title is required'],
             unique: true,
             maxLength: [40, `Can't be oversize 40 characters`]
         },
         description: {
             type: String,
-            required: [true, 'Name is required'],
+            required: [true, 'Description is required'],
             maxLength: [40, `Can't be oversize 40 characters`]
         },
         category: {
