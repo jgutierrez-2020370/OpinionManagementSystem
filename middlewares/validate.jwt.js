@@ -14,3 +14,24 @@ export const validateJwt = async(req, res, next) => {
         return res.status(401).send({message: 'Invalidate token'})
     }
 }
+
+export const isAdmin = async (req, res, next)=>{
+    try{
+        const { user } = req
+        if(!user || user.role !== 'ADMIN') return res.status(403).send(
+            {
+                succes: false,
+                message: `You do not have access`
+            }
+        )
+        next()
+    } catch (err){
+        console.error(err)
+        return res.status(403).send(
+            {
+                succes: false,
+                message: 'Unauthorized role'
+            }
+        )
+    }
+}
