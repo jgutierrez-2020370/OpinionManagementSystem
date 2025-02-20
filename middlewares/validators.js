@@ -47,6 +47,5 @@ export const createPublicationValidator = [
     body('title', 'The title is required').notEmpty().custom(existPublication),
     body('description', 'The description is required').notEmpty(),
     body('category').optional(),
-    body('creator', 'Creator is required').notEmpty(),
     validateError
 ]
