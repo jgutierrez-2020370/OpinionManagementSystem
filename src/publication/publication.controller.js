@@ -69,7 +69,15 @@ export const updatePublication = async (req, res) => {
                 }
             )
         }
-        console.log(publication.creator);
+
+        if(publication.status == false){
+            return res.status(404).send(
+                {
+                    success: false,
+                    message: 'Publication not found'
+                }
+            )
+        }
         
         if (publication.creator.toString() !== req.user.uid) {
             return res.status(403).send(
@@ -125,3 +133,80 @@ export const updatePublication = async (req, res) => {
     }
 }
 
+export const deletePublication = async (req, res) => {
+    try {
+        const { id } = req.params
+        const publication = await Publication.findById(id)
+        if (!publication) {
+            return res.status(404).send(
+                {
+                    success: false,
+                    message: 'Publication not found'
+                }
+            )
+        }
+
+        if (publication.status == false){
+            return res.status(404).send(
+                {
+                    success: false,
+                    message: 'The publication does not exist'
+                }
+            )
+        }
+
+        await Publication.findByIdAndUpdate(id, { status: false }, { new: true })
+        return res.status(200).send(
+            {
+                success: true,
+                message: 'Publication was deleted successfully'
+            }
+        )
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send(
+            {
+                success: false,
+                message: 'General error when deleting publication',
+                err
+            }
+        )
+    }
+}
+
+export const getPublications = async (req, res) => {
+    try {
+        
+        const { limit = 20, skip = 0 } = req.query
+        const publications = await Publication.find({status: true})
+            .skip(skip)
+            .limit(limit)
+            .populate('category', 'name')
+            .populate('creator', 'userName')
+
+        if(publications.length == 0) return res.status(404).send(
+            {
+                success: false,
+                message: 'Publications not found'
+            }
+        )
+
+        return res.status(200).send(
+            {
+                success: true,
+                publications,
+                total: publications.length
+            }
+        )
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send(
+            {
+                success: false,
+                message: 'General error when getting publication',
+                err
+            }
+        )
+    }
+}
