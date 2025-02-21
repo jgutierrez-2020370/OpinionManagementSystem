@@ -1,4 +1,4 @@
-import { Schema } from "mongoose";
+import { model, Schema } from "mongoose";
 
 const commentarySchema = Schema(
     {
@@ -9,13 +9,17 @@ const commentarySchema = Schema(
         },
         description: {
             type: String,
-            required: [true, 'Name is required'],
+            required: [true, 'Description is required'],
             maxLength: [40, `Can't be oversize 40 characters`]
         },
         creator: {
             type: Schema.Types.ObjectId,
             ref: "User", 
             required: true
+        },
+        status: {
+            type: Boolean,
+            default: true
         }
     },
     {
