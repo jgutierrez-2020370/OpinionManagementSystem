@@ -9,6 +9,7 @@ import authRoutes from '../src/auth/auth.routes.js'
 import userRoutes from '../src/user/user.routes.js'
 import categoryRoutes from '../src/category/category.routes.js'
 import publicationRoutes from '../src/publication/publication.routes.js'
+import comentariesRoutes from '../src/commentary/commentary.routes.js'
 
 const configs = (app)=> {
     app.use(express.json())
@@ -24,6 +25,7 @@ const routes = (app)=> {
     app.use('/v1/User', userRoutes)
     app.use('/v1/Category', categoryRoutes)
     app.use('/v1/Publication', publicationRoutes)
+    app.use('/v1/Comentaries', comentariesRoutes)
 }
 
 export const initServer = async()=>{
