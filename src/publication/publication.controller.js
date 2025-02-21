@@ -115,11 +115,13 @@ export const updatePublication = async (req, res) => {
             { new: true }
         )
 
-        return res.send({
-            success: true,
-            message: 'Publication updated successfully',
-            updatedPublication
-        })
+        return res.send(
+            {
+                success: true,
+                message: 'Publication updated successfully',
+                updatedPublication
+            }
+        )
 
     } catch (err) {
         console.error(err)
@@ -183,6 +185,7 @@ export const getPublications = async (req, res) => {
             .limit(limit)
             .populate('category', 'name')
             .populate('creator', 'userName')
+            .populate('commentaries', 'title description creator')
 
         if(publications.length == 0) return res.status(404).send(
             {
