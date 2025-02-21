@@ -29,7 +29,7 @@ export const createCommentary = async (req, res) => {
             id,
             { $push: { commentaries: commentary._id } },
             { new: true }
-        )
+        ).populate('category', 'name -_id').populate('commentaries', 'title description creator')
 
 
 
@@ -48,6 +48,48 @@ export const createCommentary = async (req, res) => {
             {
                 success: false,
                 message: 'General error when creating commentary',
+                err
+            }
+        )
+    }
+}
+
+export const updateCommentary = async(req,res)=>{
+    try {
+        const { id } = req.params
+        const data = req.body
+
+        const commentary = await Commentary.findById(id)
+        if(!commentary) {
+            res.status(404).send(
+                {
+                    succes: false,
+                    message: 'Commentary not found'
+                }
+            )
+        }
+
+        const updatedCommentary = Commentary.findByIdAndUpdate(
+
+            id,
+            data,
+            { new: true }
+        )
+
+        return res.send(
+            {
+                success: true,
+                message: 'Commentary updated successfully',
+                updatedCommentary
+            }
+        )
+         
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send(
+            {
+                success: false,
+                message: 'General error when editing commentary',
                 err
             }
         )
