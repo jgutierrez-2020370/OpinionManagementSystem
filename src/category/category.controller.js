@@ -35,7 +35,8 @@ export const createCategory = async(req, res) =>{
         return res.status(200).send(
             {
                 success: true,
-                message: 'Category added succesfully'
+                message: 'Category added succesfully',
+                category
             }
         )
     } catch (err) {
