@@ -26,6 +26,10 @@ const publicationSchema = Schema(
         commentaries: {
             type: [Schema.Types.ObjectId],
             ref: "Commentary"
+        },
+        status: {
+            type: Boolean,
+            default: true
         }
     },
     {
