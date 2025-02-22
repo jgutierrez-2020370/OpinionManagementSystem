@@ -1,0 +1,844 @@
+{
+	"info": {
+		"_postman_id": "f5c756a7-f46d-4e97-8dbf-607bb1ae00cc",
+		"name": "OpinionSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37951891"
+	},
+	"item": [
+		{
+			"name": "Publication",
+			"item": [
+				{
+					"name": "createPublication",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Políticos feos",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Los políticos son feos",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "67ba485944d58f4217bfd971",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Publication/",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Publication",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPublications",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Publication/",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Publication",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMyPublications",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Publication//MyPublications",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Publication",
+								"",
+								"MyPublications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePublication",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "Políticos feos",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Los políticos son feos",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "category",
+									"value": "67b6b8511b5cc3101dd11ea4",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Publication/67ba488744d58f4217bfd977",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Publication",
+								"67ba488744d58f4217bfd977"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletePublication",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Publication/67b7f3453eda98c72a270efe",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Publication",
+								"67b7f3453eda98c72a270efe"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "createCategory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Política",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Comentarios relacionados con la política",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Category/",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCategory",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Política",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Comentarios relacionados con la política",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Category/67b6adfbbd126eb89404dfa2",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Category",
+								"67b6adfbbd126eb89404dfa2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCategory",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "67b6b8511b5cc3101dd11ea4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Category/",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Category",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Jonathan",
+									"type": "text"
+								},
+								{
+									"key": "userDescription",
+									"value": "Me gustan los carros, el gimnasio y los gatos",
+									"type": "text"
+								},
+								{
+									"key": "userName",
+									"value": "jgutierrez",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "jgutierrez123@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Aaaa1234.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Sergio",
+									"type": "text"
+								},
+								{
+									"key": "userDescription",
+									"value": "Me gustan los carros, el gimnasio y los gatos",
+									"type": "text"
+								},
+								{
+									"key": "userName",
+									"value": "sgomez",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "sgomez123@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Aaaa1234.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "Enmanuel",
+									"type": "text"
+								},
+								{
+									"key": "userDescription",
+									"value": "Me gustan los carros, el gimnasio y los gatos",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "userName",
+									"value": "jgutierrez",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "jgutierrez123@gmail.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "Aaaa1234.",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/v1/User/",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"User",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdatePassword",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "passwordconfirm",
+									"value": "Aaaa1234.",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Abc1234.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/v1/User/updatePassword",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"User",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Commentaries",
+			"item": [
+				{
+					"name": "createCommentary",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "No lo creo",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Los politicos son muy buenos ultimamente",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Comentaries/67ba4dfe3db76f9222029f3e",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Comentaries",
+								"67ba4dfe3db76f9222029f3e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteCommentary",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "No lo creo",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Los politicos son muy buenos ultimamente",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Comentaries/67ba5112f10a785f134a60ab",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Comentaries",
+								"67ba5112f10a785f134a60ab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getMyCommentaries",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Comentaries/",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Comentaries",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCommentary",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "title",
+									"value": "No pienso lo mismo",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "description",
+									"value": "los políticos son buenos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3400/v1/Comentaries/67ba49b1577dc2d6f3ae6ebd",
+							"host": [
+								"localhost"
+							],
+							"port": "3400",
+							"path": [
+								"v1",
+								"Comentaries",
+								"67ba49b1577dc2d6f3ae6ebd"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AdminLogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"token\", data.token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "userLoggin",
+							"value": "Admin",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "userLoggin",
+							"value": "Admin123@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "@Admin123@",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3400/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3400",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserPublicationLogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"token\", data.token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "userLoggin",
+							"value": "jgutierrez123@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "userLoggin",
+							"value": "jgutierrez",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Aaaa1234.",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3400/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3400",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserComentaryLogin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"token\", data.token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "userLoggin",
+							"value": "sgomez",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Aaaa1234.",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3400/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3400",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
