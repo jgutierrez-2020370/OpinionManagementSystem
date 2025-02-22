@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { validateJwt } from "../../middlewares/validate.jwt.js";
-import { createPublication, deletePublication, getPublications, updatePublication } from "./publication.controller.js";
+import { createPublication, deletePublication, getMyPublications, getPublications, updatePublication } from "./publication.controller.js";
 import { createPublicationValidator } from "../../middlewares/validators.js";
 
 const api = Router()
@@ -13,6 +13,23 @@ api.post(
     ],
     createPublication
 )
+
+api.get(
+    '/',
+    [
+        validateJwt
+    ],
+    getPublications
+)
+
+api.get(
+    '/MyPublications',
+    [
+        validateJwt
+    ],
+    getMyPublications
+)
+
 
 api.put(
     '/:id',
@@ -30,12 +47,5 @@ api.delete(
     deletePublication
 )
 
-api.get(
-    '/',
-    [
-        validateJwt
-    ],
-    getPublications
-)
 
 export default api
