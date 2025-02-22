@@ -1,4 +1,5 @@
 import Category from '../category/category.model.js'
+import Commentary from '../commentary/commentary.model.js'
 import Publication from './publication.model.js'
 
 export const createPublication = async (req, res) => {
@@ -34,6 +35,17 @@ export const createPublication = async (req, res) => {
         const populatedPublication = await Publication.findById(publication.id)
             .populate('category', 'name')
             .populate('creator', 'userName')
+            .populate(
+                {
+                    path: 'commentaries',
+                    match: { status: true },
+                    select: 'title description creator',
+                    populate: {
+                        path: 'creator',
+                        select: 'userName -_id'
+                    }
+                }
+            )
 
         return res.status(200).send(
             {
@@ -113,7 +125,17 @@ export const updatePublication = async (req, res) => {
             id,
             data,
             { new: true }
-        )
+        ).populate('category', 'name')
+        .populate('creator', 'userName')
+        .populate({
+            path: 'commentaries',
+            match: { status: true },
+            select: 'title description creator',
+            populate: {
+                path: 'creator',
+                select: 'userName -_id'
+            }
+        })
 
         return res.send(
             {
@@ -157,13 +179,34 @@ export const deletePublication = async (req, res) => {
             )
         }
 
-        await Publication.findByIdAndUpdate(id, { status: false }, { new: true })
+        if (publication.creator.toString() !== req.user.uid) {
+            return res.status(403).send(
+                {
+                    success: false,
+                    message: 'You are not allowed to delete this publication'
+                }
+            )
+        }
+
+        const updatePublication = await Publication.findByIdAndUpdate(id,
+            { status: false }, 
+            { new: true }
+        )
+
+        await Commentary.updateMany(
+            { _id: { $in: publication.commentaries } },
+            { status: false }
+        )
+
         return res.status(200).send(
             {
                 success: true,
-                message: 'Publication was deleted successfully'
+                message: 'Publication was deleted successfully',
+                updatePublication
             }
         )
+
+
     } catch (err) {
         console.error(err)
         return res.status(500).send(
@@ -185,7 +228,15 @@ export const getPublications = async (req, res) => {
             .limit(limit)
             .populate('category', 'name')
             .populate('creator', 'userName')
-            .populate('commentaries', 'title description creator')
+            .populate({
+                path: 'commentaries',
+                match: { status: true },
+                select: 'title description creator',
+                populate: {
+                    path: 'creator',
+                    select: 'userName -_id'
+                }
+            })
 
         if(publications.length == 0) return res.status(404).send(
             {
@@ -208,6 +259,58 @@ export const getPublications = async (req, res) => {
             {
                 success: false,
                 message: 'General error when getting publication',
+                err
+            }
+        )
+    }
+}
+
+export const getMyPublications = async (req, res) => {
+    try {
+        
+        const { limit = 20, skip = 0 } = req.query
+        const publications = await Publication.find(
+            {
+                status: true,
+                creator: req.user.uid
+            }
+        )
+            .skip(skip)
+            .limit(limit)
+            .populate('category', 'name')
+            .populate('creator', 'userName')
+            .populate({
+                path: 'commentaries',
+                match: { status: true },
+                select: 'title description creator',
+                populate: {
+                    path: 'creator',
+                    select: 'userName -_id'
+                }
+            })
+
+        if(publications.length == 0) return res.status(404).send(
+            {
+                success: false,
+                message: 'Publications not found'
+            }
+        )
+
+        return res.status(200).send(
+            {
+                success: true,
+                message: 'Your publications:',
+                publications,
+                total: publications.length
+            }
+        )
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send(
+            {
+                success: false,
+                message: 'General error when getting your publications',
                 err
             }
         )
