@@ -29,7 +29,16 @@ export const createCommentary = async (req, res) => {
             id,
             { $push: { commentaries: commentary._id } },
             { new: true }
-        ).populate('category', 'name -_id').populate('commentaries', 'title description creator')
+        ).populate('category', 'name -_id')
+        .populate({
+            path: 'commentaries',
+            select: 'title description creator',
+            populate: {
+                path: 'creator',
+                select: 'userName -_id'
+            }
+        })
+        .populate('creator', 'userName -_id')
 
 
 
@@ -69,14 +78,23 @@ export const updateCommentary = async(req,res)=>{
             )
         }
 
-        const updatedCommentary = Commentary.findByIdAndUpdate(
-
+        if (commentary.creator.toString() !== req.user.uid) {
+            return res.status(403).send(
+                {
+                    success: false,
+                    message: 'You are not allowed to update this commentary'
+                }
+            )
+        }
+        
+        const updatedCommentary = await Commentary.findByIdAndUpdate(
             id,
             data,
-            { new: true }
-        )
+            { new : true }
+        ).populate('creator', 'userName')
+        
 
-        return res.send(
+        return res.status(200).send(
             {
                 success: true,
                 message: 'Commentary updated successfully',
@@ -90,6 +108,111 @@ export const updateCommentary = async(req,res)=>{
             {
                 success: false,
                 message: 'General error when editing commentary',
+                err
+            }
+        )
+    }
+}
+
+export const getMyCommentaries = async (req, res) => {
+    try {
+        
+        const { limit = 20, skip = 0 } = req.query
+        const Commentaries = await Commentary.find(
+            {
+                status: true,
+                creator: req.user.uid
+            }
+        )
+            .skip(skip)
+            .limit(limit)
+            .populate('creator', 'userName -_id')
+
+        if(Commentaries.length == 0) return res.status(404).send(
+            {
+                success: false,
+                message: 'Commentaries not found'
+            }
+        )
+
+        return res.status(200).send(
+            {
+                success: true,
+                message: 'Your Commentaries:',
+                Commentaries,
+                total: Commentaries.length
+            }
+        )
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send(
+            {
+                success: false,
+                message: 'General error when getting Commentaries',
+                err
+            }
+        )
+    }
+}
+
+export const deleteCommentary = async (req, res) => {
+    try {
+        const { id } = req.params
+
+        const commentary = await Commentary.findById(id)
+        if (!commentary) {
+            return res.status(404).send(
+                {
+                    success: false,
+                    message: 'Commentary not found'
+                }
+            )
+        }
+
+        if (commentary.status === false) {
+            return res.status(404).send(
+                {
+                    success: false,
+                    message: 'Commentary not found'
+                }
+            )
+        }
+
+        if (commentary.creator.toString() !== req.user.uid) {
+            return res.status(403).send(
+                {
+                    success: false,
+                    message: 'You are not allowed to delete this commentary'
+                }
+            )
+        }
+
+        const updatedCommentary = await Commentary.findByIdAndUpdate(
+            id,
+            { status: false },
+            { new: true }
+        )
+
+        await Publication.updateMany(
+            { commentaries: id },
+            { $pull: { commentaries: id } }
+        )
+
+        return res.status(200).send(
+            {
+                success: true,
+                message: 'Commentary was deleted successfully',
+                updatedCommentary
+            }
+        )
+
+    } catch (err) {
+        console.error(err)
+        return res.status(500).send(
+            {
+                success: false,
+                message: 'General error when deleting commentary',
                 err
             }
         )
