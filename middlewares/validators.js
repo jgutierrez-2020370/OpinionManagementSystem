@@ -26,6 +26,12 @@ export const updateProfileValidator = [
     validateError
 ]
 
+export const passwordUpdateValidator = [
+    body('passwordconfirm', 'Password confirm is required').notEmpty(),
+    body('password', 'Password is required').notEmpty(),
+    validateError
+]
+
 export const categoryValidator = [
     body('name', 'name cannot be empty').notEmpty().custom(existCategory),
     body('description', 'description cannot be empty').notEmpty(),
@@ -49,3 +55,24 @@ export const createPublicationValidator = [
     body('category').optional(),
     validateError
 ]
+
+export const updatePublicationValidate = [
+    body('title', 'The title is required').optional().isLength({max: 30}),
+    body('description', 'The description is required').optional().isLength({max: 400}),
+    body('category').optional(),
+    body('status').custom(() => { throw new Error('Status cannot be updated') }),
+    validateError
+]
+
+export const createCommentaryValidator = [
+    body('title', 'The title is required').notEmpty(),
+    body('description', 'The description is required').notEmpty(),
+    validateError
+]
+
+export const updateCommentaryValidate = [
+    body('title', 'The title is required').optional().isLength({max: 40}),
+    body('description', 'The description is required').optional().isLength({max: 400}),
+    validateError
+]
+
