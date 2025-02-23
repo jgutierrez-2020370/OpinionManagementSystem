@@ -1,6 +1,7 @@
 import { Router } from "express"
 import { validateJwt } from "../../middlewares/validate.jwt.js"
 import { createCommentary, deleteCommentary, getMyCommentaries, updateCommentary } from "./commentary.controller.js"
+import { createCommentaryValidator, updateCommentaryValidate } from "../../middlewares/validators.js"
 
 const api = Router()
 
@@ -15,7 +16,8 @@ api.get(
 api.post(
     '/:id',
     [
-        validateJwt
+        validateJwt,
+        createCommentaryValidator
     ],
     createCommentary
 )
@@ -23,7 +25,9 @@ api.post(
 api.put(
     '/:id',
     [
-        validateJwt
+        validateJwt,
+        updateCommentaryValidate
+
     ],
     updateCommentary
 )

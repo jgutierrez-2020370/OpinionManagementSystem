@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { validateJwt } from "../../middlewares/validate.jwt.js";
 import { createPublication, deletePublication, getMyPublications, getPublications, updatePublication } from "./publication.controller.js";
-import { createPublicationValidator } from "../../middlewares/validators.js";
+import { createPublicationValidator, updatePublicationValidate } from "../../middlewares/validators.js";
 
 const api = Router()
 
@@ -34,7 +34,8 @@ api.get(
 api.put(
     '/:id',
     [
-        validateJwt
+        validateJwt,
+        updatePublicationValidate
     ],
     updatePublication
 )
