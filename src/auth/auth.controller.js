@@ -12,7 +12,7 @@ export const CreateUser = async(req, res) =>{
         return res.send(
             {
                 success: true,
-                message: `registration successful, Welcome ${user.username}`
+                message: `registration successful, Welcome ${user.userName}`
             }
         )
     } catch (err) {
